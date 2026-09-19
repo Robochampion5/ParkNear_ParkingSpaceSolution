@@ -1,0 +1,13 @@
+{
+  "UB_CITY_COORDS": { "lat": 12.9724, "lng": 77.5968 },
+  "demandGrid": [
+    { "label": "Mon", "values": [22, 38, 62, 84, 40, 15] },
+    { "label": "Tue", "values": [28, 45, 58, 78, 32, 18] },
+    { "label": "Wed", "values": [40, 55, 72, 90, 48, 22] },
+    { "label": "Thu", "values": [18, 30, 55, 74, 36, 14] },
+    { "label": "Fri", "values": [55, 68, 88, 95, 60, 30] },
+    { "label": "Sat", "values": [30, 42, 50, 65, 35, 20] },
+    { "label": "Sun", "values": [12, 20, 32, 45, 22, 10] }
+  ],
+  "timeLabels": ["6am", "10am", "1pm", "4pm", "7pm", "10pm"]
+}
