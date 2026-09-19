@@ -60,7 +60,7 @@
       "lng": 77.593,
       "pricePerHour": 25,
       "totalSpots": 30,
-      "availableSpots": 8,
+      "availableSpots": 0,
       "evSpots": 2,
       "rating": 3.9,
       "distanceMeters": 520,

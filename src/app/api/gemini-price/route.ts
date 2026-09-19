@@ -8,10 +8,12 @@ export async function POST(req: NextRequest) {
     const prompt = `Suggest a price per hour (INR) for a parking facility at ${location || 'urban Bangalore'} (${type || 'underground lot'}), capacity ~${capacity || 60} spots, with nearby context: "${nearbyDemandContext || 'high office traffic'}". Respond with exactly two lines: PRICE: [number] REASON: [one sentence tied to demand].`;
 
     let suggestedPrice = 45;
-    let reason = 'Pricing reflects moderate urban demand and available capacity.';
+    let reason = 'Standard pricing for this capacity and area (demo fallback)';
 
     if (key) {
       try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout for demo reliability
         const res = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
           {
@@ -21,21 +23,26 @@ export async function POST(req: NextRequest) {
               contents: [{ parts: [{ text: prompt }] }],
               generationConfig: { temperature: 0.3, maxOutputTokens: 256 },
             }),
+            signal: controller.signal,
           }
         );
+        clearTimeout(timeout);
         const data = await res.json();
         const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
         const priceMatch = text.match(/PRICE:\s*(\d+)/i);
         const reasonMatch = text.match(/REASON:\s*(.+)/i);
         if (priceMatch) suggestedPrice = parseInt(priceMatch[1], 10);
         if (reasonMatch) reason = reasonMatch[1].trim();
-      } catch {
-        // Fallback handled below
+      } catch (e) {
+        // Network / timeout / abort → fallback handled below
       }
     }
 
     return NextResponse.json({ suggestedPrice, reason });
   } catch {
-    return NextResponse.json({ suggestedPrice: 45, reason: 'Standard pricing for this capacity and area.' });
+    return NextResponse.json({
+      suggestedPrice: 45,
+      reason: 'Standard pricing for this capacity and area (demo fallback — no API key or network error)',
+    });
   }
 }
