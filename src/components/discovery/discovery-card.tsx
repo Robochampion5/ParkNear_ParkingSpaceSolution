@@ -1,7 +1,12 @@
 import { Facility } from '@/data/facilities';
 import { MapPin, Clock, Star, Umbrella, Shield, Zap, ArrowRight } from 'lucide-react';
 
-export function DiscoveryCard({ f }: { f: Facility }) {
+interface Props {
+  f: Facility;
+  onBook?: (f: Facility) => void;
+}
+
+export function DiscoveryCard({ f, onBook }: Props) {
   const pct = Math.round((f.availableSpots / f.totalSpots) * 100);
   let statusColor = 'bg-warm-amber/20 text-warm-amber';
   let statusLabel = 'Moderate';
@@ -98,7 +103,7 @@ export function DiscoveryCard({ f }: { f: Facility }) {
         </div>
 
         {/* Action button */}
-        <button className="w-full mt-2 py-3 rounded-xl bg-deep-navy text-white font-medium text-sm hover:bg-deep-navy/90 active:scale-[0.99] transition flex items-center justify-center gap-2 shadow-lg shadow-deep-navy/20">
+        <button onClick={() => onBook?.(f)} className="w-full mt-2 py-3 rounded-xl bg-deep-navy text-white font-medium text-sm hover:bg-deep-navy/90 active:scale-[0.99] transition flex items-center justify-center gap-2 shadow-lg shadow-deep-navy/20">
           Book spot <ArrowRight className="w-4 h-4" />
         </button>
       </div>

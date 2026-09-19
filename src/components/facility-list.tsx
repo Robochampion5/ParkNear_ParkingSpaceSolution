@@ -2,7 +2,7 @@ import { facilities } from '@/data/facilities';
 import { DiscoveryCard } from '@/components/discovery/discovery-card';
 import { MotionDiv } from '@/components/motion-div';
 
-export function FacilityList() {
+export function FacilityList({ onBook }: { onBook?: (f: any) => void }) {
   return (
     <MotionDiv
       className="space-y-4"
@@ -20,7 +20,7 @@ export function FacilityList() {
 
       <div className="space-y-4">
         {facilities.map(f => (
-          <DiscoveryCard key={f.id} f={f} />
+          <DiscoveryCard key={f.id} f={f} onBook={onBook} />
         ))}
       </div>
     </MotionDiv>
