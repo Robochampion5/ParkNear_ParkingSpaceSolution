@@ -4,7 +4,7 @@ import { HostListings } from '@/components/host-listings';
 export default function HostDashboard() {
   return (
     <div className="space-y-8">
-      <div className="bg-card/50 rounded-xl p-6 border border-border/50">
+      <div className="bg-card/50 rounded-xl p-6 border border-border/50 shadow-sm">
         <h2 className="text-2xl font-semibold mb-4">Host Dashboard</h2>
         <p className="text-muted-foreground">
           List your parking space and manage your bookings dashboard.

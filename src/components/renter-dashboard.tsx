@@ -8,6 +8,8 @@ import { Facility } from '@/data/facilities';
 import BookingModal from '@/components/booking-modal';
 import { getBookings, saveBooking } from '@/lib/bookings';
 import { CalendarDays, Clock } from 'lucide-react';
+import { EmptyBookings } from './empty-states';
+import { SkeletonListRow } from './skeleton';
 
 export default function RenterDashboard() {
   const [openFacility, setOpenFacility] = useState<Facility | null>(null);
@@ -51,7 +53,7 @@ export default function RenterDashboard() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-        <div className="bg-card/50 rounded-xl p-5 border border-border/50">
+        <div className="bg-card/50 rounded-xl p-5 border border-border/50 shadow-sm">
           <MapView />
         </div>
         <div className="space-y-5">
@@ -67,9 +69,7 @@ export default function RenterDashboard() {
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
           <h3 className="text-xl font-bold text-deep-navy mb-4">My Bookings</h3>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {bookings.length === 0 ? (
-              <div className="bg-card/50 rounded-2xl p-6 border border-border/60 text-sm text-muted-foreground">No bookings yet.</div>
-            ) : (
+            {bookings.length === 0 ? <EmptyBookings /> : (
               bookings.map((b) => (
                 <div key={b.id + bookingsRefresh} className="bg-card rounded-2xl border border-border/60 shadow-sm p-5 space-y-3 hover:shadow-md transition-shadow">
                   <div className="flex justify-between items-start">

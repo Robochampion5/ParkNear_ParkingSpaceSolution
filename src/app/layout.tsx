@@ -7,10 +7,10 @@ import Footer from '@/components/footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ParkNear - Smart Parking Made Easy',
+  title: 'ParkNear — Parking, Reserved.',
   description: 'Book with certainty. Park without circling.',
   icons: {
-    icon: '/favicon.ico',
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
   },
 };
 
