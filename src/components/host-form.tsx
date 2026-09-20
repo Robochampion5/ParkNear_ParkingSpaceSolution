@@ -22,6 +22,8 @@ export default function HostForm() {
   const [loadingPrice, setLoadingPrice] = useState(false);
   const [listed, setListed] = useState(false);
   const [suggestionAccepted, setSuggestionAccepted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [honeypot, setHoneypot] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
 
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -66,8 +68,28 @@ export default function HostForm() {
     }
   };
 
+  const validate = () => {
+    const next: Record<string, string> = {};
+    if (!form.address.trim()) next.address = 'Address is required';
+    if (!form.capacity.trim()) next.capacity = 'Capacity is required';
+    else if (Number(form.capacity) <= 0) next.capacity = 'Capacity must be positive';
+    if (form.ev && Number(form.evCount) <= 0) next.evCount = 'EV spots must be positive';
+    if (step === 'pricing' && !form.price.trim()) next.price = 'Price is required';
+    return next;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (honeypot) {
+      setErrors({ bot: 'Spam detected' });
+      return;
+    }
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
     if (step === 'details') {
       setStep('pricing');
       callGemini();
@@ -100,14 +122,19 @@ export default function HostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+      {/* Honeypot */}
+      <div aria-hidden="true" className="absolute left-[-9999px]">
+        <input name="website" type="text" autoComplete="off" tabIndex={-1} value={honeypot} onChange={e => setHoneypot(e.target.value)} />
+      </div>
       {step === 'details' && (
         <>
           <div className="bg-card rounded-2xl border border-border/60 shadow-sm p-6 space-y-5">
             <h2 className="text-xl font-bold text-deep-navy">List your parking space</h2>
             <div className="space-y-2">
               <label className="text-sm font-medium text-deep-navy">Address</label>
-              <input required value={form.address} onChange={e => setForm(p => ({ ...p, address: e.target.value }))} className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-blue/30" placeholder="e.g., Lavelle Road Building" />
+              <input required value={form.address} onChange={e => setForm(p => ({ ...p, address: e.target.value }))} className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-blue/30" placeholder="e.g., Lavelle Road Building, Bengaluru" />
+              {errors.address && <p className="text-xs text-red-600 font-medium">{errors.address}</p>}
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">

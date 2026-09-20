@@ -1,4 +1,4 @@
-import { DemandHeatmap } from '@/components/demand-heatmap';
+import DemandHeatmap from '@/components/demand-heatmap';
 import { CityStats } from '@/components/city-stats';
 import { FlaggedQueue } from '@/components/flagged-queue';
 import { EarningsChart } from '@/components/earnings-chart';

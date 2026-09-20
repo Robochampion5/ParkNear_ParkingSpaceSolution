@@ -1,4 +1,4 @@
-import { HostForm } from '@/components/host-form';
+import HostForm from '@/components/host-form';
 import { HostListings } from '@/components/host-listings';
 
 export default function HostDashboard() {

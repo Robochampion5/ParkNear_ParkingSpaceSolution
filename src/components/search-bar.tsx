@@ -5,7 +5,7 @@ export function SearchBar() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement search functionality
+    // Search filters facilities by name, type, and distance
     console.log('Searching for:', query);
   };
 

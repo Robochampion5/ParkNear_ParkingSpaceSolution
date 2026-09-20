@@ -52,9 +52,11 @@ export default function RenterDashboard() {
         </button>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-        <div className="bg-card/50 rounded-xl p-5 border border-border/50 shadow-sm">
-          <MapView />
+      <div className="grid gap-6 lg:grid-cols-[300px_1fr] md:items-start">
+        <div className="bg-card/50 rounded-xl p-5 border border-border/50 shadow-sm min-h-[320px] md:min-h-[420px]">
+          <div className="h-[320px] md:h-[420px]">
+            <MapView />
+          </div>
         </div>
         <div className="space-y-5">
           <div className="bg-card/50 rounded-xl p-5 border border-border/50">
